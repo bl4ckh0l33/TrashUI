@@ -1,6 +1,9 @@
 // Establecer un umbral de proximidad en metros
 var umbralProximidad = 10; // Por ejemplo, 10 metros
 
+// Audio
+const audio = document.querySelector("audio[data-alert=notify]");
+
 // Función para calcular la distancia entre dos coordenadas en metros
 function calcularDistancia(coord1, coord2) {
   return google.maps.geometry.spherical.computeDistanceBetween(coord1, coord2);
@@ -15,6 +18,7 @@ function verificarProximidad(ubicacionActual) {
   if (distancia < umbralProximidad) {
     // Mostrar una alerta
     console.log("¡Estás cerca de la ubicación objetivo!");
+    audio.play();
   }
 }
 
