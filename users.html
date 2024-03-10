@@ -102,13 +102,13 @@
             </select>
           </form>
           <div class="flex mt-4 md:mt-6">
-              <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver Bus</a>
+              <a href="#" id="player" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver Bus</a>
           </div>
       </div>
       <div id="map" style="height: 400px; width: 100%;"></div>
     </div>
   </div>
-  <audio src="./alert.wav" data-alert="notify"></audio>
+  <audio id="alerta" src="./alerta.mp3" preload="auto"></audio>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGIoArbMoV4AihuuBL_Dr44_4Bq05GTXc&libraries=geometry"></script>
   <script src="users.js"></script>
 </body>

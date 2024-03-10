@@ -2,7 +2,12 @@
 var umbralProximidad = 50; // Por ejemplo, 50 metros
 
 // Audio
-const audio = document.querySelector("audio[data-alert=notify]");
+const audio = document.getElementById("alerta");
+const player = document.getElementById("player");
+
+player.addEventListener("click", () => {
+  setInterval(consultarUbicacion, 4000);
+});
 
 // Función para calcular la distancia entre dos coordenadas en metros
 function calcularDistancia(coord1, coord2) {
@@ -63,8 +68,6 @@ function consultarUbicacion() {
       console.error("Error:", error);
     });
 }
-
-setInterval(consultarUbicacion, 4000);
 
 function initMap() {
   // Si el mapa aún no se ha inicializado, inicialízalo
