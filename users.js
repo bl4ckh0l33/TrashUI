@@ -1,5 +1,5 @@
 // Establecer un umbral de proximidad en metros
-var umbralProximidad = 10; // Por ejemplo, 10 metros
+var umbralProximidad = 50; // Por ejemplo, 50 metros
 
 // Audio
 const audio = document.querySelector("audio[data-alert=notify]");
