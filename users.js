@@ -3,6 +3,9 @@ const busesSelect = document.getElementById("buses");
 const driverNameLabel = document.querySelector("#driverName");
 const userImage = document.querySelector("#userImage");
 
+var svgDot = "./dot.svg";
+var svgBus = "./bus.svg";
+
 var buses;
 
 busesSelect.addEventListener("change", () => {
@@ -48,6 +51,7 @@ function verificarProximidad(ubicacionActual) {
 // Inicializar el mapa de Google fuera de la función initMap
 var mapa = null;
 var marcador = null;
+var marcador2 = null;
 var ubicacionObjetivo = new google.maps.LatLng(40.7128, -74.006);
 var ubicacionActual = new google.maps.LatLng(40.7128, -74.006);
 
@@ -68,6 +72,17 @@ function consultarUbicacion() {
           posicion.coords.latitude,
           posicion.coords.longitude
         );
+        if (!marcador2) {
+          marcador2 = new google.maps.Marker({
+            position: ubicacionActual,
+            map: mapa,
+            title: "¡Yo: Estoy aquí!",
+            icon: svgDot,
+            zIndex: 1,
+          });
+        } else {
+          marcador2.setPosition(ubicacionActual);
+        }
       });
 
       ubicacionObjetivo = new google.maps.LatLng(data.lat, data.lng);
@@ -110,7 +125,12 @@ function actualizarMapa(ubicacion) {
     marcador = new google.maps.Marker({
       position: ubicacion,
       map: mapa,
-      title: "¡Estoy aquí!",
+      title: "Basurero: Está aquí!",
+      icon: {
+        url: svgBus,
+        scaledSize: new google.maps.Size(80, 80), // Tamaño personalizado
+      },
+      zIndex: 2,
     });
   } else {
     console.log(mapa.marker);

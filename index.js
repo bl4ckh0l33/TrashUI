@@ -5,6 +5,8 @@ const busesSelect = document.getElementById("buses");
 const driverNameLabel = document.querySelector("#driverName");
 const userImage = document.querySelector("#userImage");
 
+var svgBus = "./bus.svg";
+
 var buses;
 var intervalo;
 
@@ -20,7 +22,7 @@ busesSelect.addEventListener("change", () => {
 });
 
 initLocationBtn.addEventListener("click", () => {
-  intervalo = setInterval(obtenerUbicacion, 4000);
+  intervalo = setInterval(obtenerUbicacion, 2000);
 });
 
 stopLocationBtn.addEventListener("click", () => {
@@ -105,6 +107,10 @@ function actualizarMapa(ubicacion) {
       position: ubicacion,
       map: mapa,
       title: "¡Estoy aquí!",
+      icon: {
+        url: svgBus,
+        scaledSize: new google.maps.Size(80, 80), // Tamaño personalizado
+      },
     });
   } else {
     console.log(mapa.marker);
