@@ -1,3 +1,21 @@
+const BASE_API_URL = "https://trash-api-tau.vercel.app/api/posts";
+const busesSelect = document.getElementById("buses");
+const driverNameLabel = document.querySelector("#driverName");
+const userImage = document.querySelector("#userImage");
+
+var buses;
+
+busesSelect.addEventListener("change", () => {
+  driverNameLabel.textContent = `${
+    buses.filter((el) => el.busPlate === Number(busesSelect.value))[0].firstname
+  } ${
+    buses.filter((el) => el.busPlate === Number(busesSelect.value))[0].lastname
+  }`;
+  userImage.src = `${
+    buses.filter((el) => el.busPlate === Number(busesSelect.value))[0].image
+  }`;
+});
+
 // Establecer un umbral de proximidad en metros
 var umbralProximidad = 50; // Por ejemplo, 50 metros
 
@@ -34,11 +52,8 @@ var ubicacionObjetivo = new google.maps.LatLng(40.7128, -74.006);
 var ubicacionActual = new google.maps.LatLng(40.7128, -74.006);
 
 function consultarUbicacion() {
-  // BASE_API_URL a la que enviar la solicitud POST
-  const BASE_API_URL = "https://trash-api-tau.vercel.app/api/posts/1";
-
   // Realizar la solicitud Fetch
-  fetch(BASE_API_URL)
+  fetch(`${BASE_API_URL}/${Number(busesSelect.value)}`)
     .then((response) => {
       // Verificar el estado de la respuesta
       if (!response.ok) {
@@ -47,6 +62,7 @@ function consultarUbicacion() {
       return response.json(); // Convertir la respuesta a JSON si es necesario
     })
     .then((data) => {
+      console.log("data", data);
       navigator.geolocation.getCurrentPosition((posicion) => {
         ubicacionActual = new google.maps.LatLng(
           posicion.coords.latitude,
@@ -62,6 +78,7 @@ function consultarUbicacion() {
         lng: data.lng,
       };
       actualizarMapa(ubicacion);
+      return true;
     })
     .catch((error) => {
       // Manejar errores
@@ -71,6 +88,7 @@ function consultarUbicacion() {
 
 function initMap() {
   // Si el mapa aún no se ha inicializado, inicialízalo
+  console.log("mapa", mapa);
   if (mapa === null) {
     mapa = new google.maps.Map(document.getElementById("map"), {
       zoom: 18, // Nivel de zoom
@@ -88,13 +106,44 @@ function actualizarMapa(ubicacion) {
   // Crear o mover el marcador a la nueva ubicación
   if (marcador === null) {
     // Crear un nuevo marcador si no existe
+    console.log("creando marcador cuando no existe");
     marcador = new google.maps.Marker({
       position: ubicacion,
       map: mapa,
       title: "¡Estoy aquí!",
     });
   } else {
+    console.log(mapa.marker);
     // Mover el marcador a la nueva ubicación si ya existe
-    mapa.marker.setPosition(ubicacion);
+    if (mapa && ubicacion) {
+      console.log("actualizando la ubicacion del marcador");
+      marcador.setPosition(ubicacion);
+    }
   }
 }
+
+function getBuses() {
+  fetch(BASE_API_URL)
+    .then((response) => {
+      // Verificar el estado de la respuesta
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos.");
+      }
+      return response.json(); // Convertir la respuesta a JSON si es necesario
+    })
+    .then((data) => {
+      // Hacer algo con la respuesta recibida
+      buses = data;
+      console.log(buses);
+      let options = buses.map((el) => {
+        return `<option value=${el.busPlate} >Bus: ${el.busPlate} | Chofer: ${el.firstname} ${el.lastname}</option>`;
+      });
+      busesSelect.innerHTML += options;
+    })
+    .catch((error) => {
+      // Manejar errores
+      console.error("Error:", error);
+    });
+}
+
+getBuses();
