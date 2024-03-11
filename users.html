@@ -91,14 +91,13 @@
         </div>
     </div>
       <div class="flex flex-col items-center pb-10">
-          <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="Bonnie image"/>
-          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Lucas Vasquez</h5>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Usuario</span>
+          <img id="userImage" class="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face-300x300.jpeg" alt="Bonnie image"/>
+          <h5 id="driverName" class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Nombre de Chofer</h5>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Chofer de Bus Recolector</span>
           <form class="max-w-sm mx-auto mt-5">
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seleciona un Bus</label>
-            <select id="countries" aria-placeholder="Selecciona un bus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="1">Bus del Sector 1</option>
-              <option value="2">Bus del Sector 2</option>
+            <select id="buses" aria-placeholder="Selecciona un bus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value="0" disabled selected>Selecciona un bus</option>
             </select>
           </form>
           <div class="flex mt-4 md:mt-6">
