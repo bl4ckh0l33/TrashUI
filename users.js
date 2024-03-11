@@ -24,7 +24,7 @@ const audio = document.getElementById("alerta");
 const player = document.getElementById("player");
 
 player.addEventListener("click", () => {
-  setInterval(consultarUbicacion, 4000);
+  setInterval(consultarUbicacion, 2000);
 });
 
 // Función para calcular la distancia entre dos coordenadas en metros
