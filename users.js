@@ -62,6 +62,7 @@ function consultarUbicacion() {
       return response.json(); // Convertir la respuesta a JSON si es necesario
     })
     .then((data) => {
+      console.log("data", data);
       navigator.geolocation.getCurrentPosition((posicion) => {
         ubicacionActual = new google.maps.LatLng(
           posicion.coords.latitude,
@@ -77,6 +78,7 @@ function consultarUbicacion() {
         lng: data.lng,
       };
       actualizarMapa(ubicacion);
+      return true;
     })
     .catch((error) => {
       // Manejar errores
@@ -86,6 +88,7 @@ function consultarUbicacion() {
 
 function initMap() {
   // Si el mapa aún no se ha inicializado, inicialízalo
+  console.log("mapa", mapa);
   if (mapa === null) {
     mapa = new google.maps.Map(document.getElementById("map"), {
       zoom: 18, // Nivel de zoom
@@ -103,14 +106,19 @@ function actualizarMapa(ubicacion) {
   // Crear o mover el marcador a la nueva ubicación
   if (marcador === null) {
     // Crear un nuevo marcador si no existe
+    console.log("creando marcador cuando no existe");
     marcador = new google.maps.Marker({
       position: ubicacion,
       map: mapa,
       title: "¡Estoy aquí!",
     });
   } else {
+    console.log(mapa.marker);
     // Mover el marcador a la nueva ubicación si ya existe
-    mapa.marker.setPosition(ubicacion);
+    if (mapa && ubicacion) {
+      console.log("actualizando la ubicacion del marcador");
+      marcador.setPosition(ubicacion);
+    }
   }
 }
 
