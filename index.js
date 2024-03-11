@@ -69,29 +69,51 @@ function obtenerUbicacion() {
       };
 
       actualizarUbicacion(ubicacion);
-      initMap(ubicacion);
+      actualizarMapa(ubicacion);
     });
   } else {
     console.log("Geolocalización no es soportada por este navegador.");
   }
 }
 
-function initMap(ubicacion) {
-  var mapa = new google.maps.Map(document.getElementById("map"), {
-    zoom: 18, // Nivel de zoom
-    center: ubicacion, // Centro del mapa
-  });
+// Inicializar el mapa de Google fuera de la función initMap
+var mapa = null;
+var marcador = null;
 
-  var svgIcono = {
-    url: "https://www.tierra.org/wp-content/themes/tierra.org2015/favicon.ico", // Ruta del archivo SVG
-  };
+function initMap() {
+  // Si el mapa aún no se ha inicializado, inicialízalo
+  console.log("mapa", mapa);
+  if (mapa === null) {
+    mapa = new google.maps.Map(document.getElementById("map"), {
+      zoom: 18, // Nivel de zoom
+    });
+  }
+}
 
-  var marcador = new google.maps.Marker({
-    position: ubicacion,
-    map: mapa,
-    title: "¡Estoy aquí!",
-    icon: svgIcono,
-  });
+function actualizarMapa(ubicacion) {
+  // Inicializar el mapa si aún no se ha inicializado
+  initMap();
+
+  // Centrar el mapa en la nueva ubicación
+  mapa.setCenter(ubicacion);
+
+  // Crear o mover el marcador a la nueva ubicación
+  if (marcador === null) {
+    // Crear un nuevo marcador si no existe
+    console.log("creando marcador cuando no existe");
+    marcador = new google.maps.Marker({
+      position: ubicacion,
+      map: mapa,
+      title: "¡Estoy aquí!",
+    });
+  } else {
+    console.log(mapa.marker);
+    // Mover el marcador a la nueva ubicación si ya existe
+    if (mapa && ubicacion) {
+      console.log("actualizando la ubicacion del marcador");
+      marcador.setPosition(ubicacion);
+    }
+  }
 }
 
 function getBuses() {
