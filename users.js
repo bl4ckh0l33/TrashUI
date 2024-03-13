@@ -39,7 +39,7 @@ function calcularDistancia(coord1, coord2) {
   return google.maps.geometry.spherical.computeDistanceBetween(coord1, coord2);
 }
 
-// Función para verificar la proximidad y mostrar una alerta si es necesario
+// Función para verificar la proximidad y mostrar una alerta
 function verificarProximidad(ubicacionActual) {
   // Calcular la distancia entre la ubicación actual y la ubicación objetivo
   var distancia = calcularDistancia(ubicacionActual, ubicacionObjetivo);
