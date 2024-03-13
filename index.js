@@ -9,7 +9,7 @@ var svgBus = "./bus.svg";
 
 var buses;
 var intervalo;
-
+//funcion para selecionar buses
 busesSelect.addEventListener("change", () => {
   driverNameLabel.textContent = `${
     buses.filter((el) => el.busPlate === Number(busesSelect.value))[0].firstname
@@ -20,15 +20,15 @@ busesSelect.addEventListener("change", () => {
     buses.filter((el) => el.busPlate === Number(busesSelect.value))[0].image
   }`;
 });
-
+//boton de inicializar el recorrido con un intervalo de 2 segundos
 initLocationBtn.addEventListener("click", () => {
   intervalo = setInterval(obtenerUbicacion, 2000);
 });
-
+//para detener el recorrido
 stopLocationBtn.addEventListener("click", () => {
   clearInterval(intervalo);
 });
-
+//actualizar la ubicacion constantemente del camion
 function actualizarUbicacion(datos) {
   // BASE_API_URL a la que enviar la solicitud POST
 
@@ -59,7 +59,7 @@ function actualizarUbicacion(datos) {
       console.error("Error:", error);
     });
 }
-
+//la funcion de obtener ubicacion del camion recolector con su latitud y longitud
 function obtenerUbicacion() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (posicion) {
@@ -81,7 +81,7 @@ function obtenerUbicacion() {
 // Inicializar el mapa de Google fuera de la función initMap
 var mapa = null;
 var marcador = null;
-
+// funcion para inicializar el mapa 
 function initMap() {
   // Si el mapa aún no se ha inicializado, inicialízalo
   console.log("mapa", mapa);
@@ -91,7 +91,7 @@ function initMap() {
     });
   }
 }
-
+//funcion para que el mapa se vaya actualizando constantemente el camion avanza
 function actualizarMapa(ubicacion) {
   // Inicializar el mapa si aún no se ha inicializado
   initMap();
