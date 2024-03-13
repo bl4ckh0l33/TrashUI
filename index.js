@@ -8,7 +8,13 @@ const userImage = document.querySelector("#userImage");
 var svgBus = "./bus.svg";
 
 var buses;
-var intervalo;
+var intervalo1;
+var intervalo2;
+
+var coordenadas = {
+  lat: 0,
+  lng: 0,
+};
 
 busesSelect.addEventListener("change", () => {
   driverNameLabel.textContent = `${
@@ -22,11 +28,13 @@ busesSelect.addEventListener("change", () => {
 });
 
 initLocationBtn.addEventListener("click", () => {
-  intervalo = setInterval(obtenerUbicacion, 2000);
+  intervalo1 = setInterval(getLatLngAndUpdateDB, 2000);
+  intervalo2 = setInterval(getLatLngAndUpdateMap, 500);
 });
 
 stopLocationBtn.addEventListener("click", () => {
-  clearInterval(intervalo);
+  clearInterval(intervalo1);
+  clearInterval(intervalo2);
 });
 
 function actualizarUbicacion(datos) {
@@ -60,18 +68,38 @@ function actualizarUbicacion(datos) {
     });
 }
 
-function obtenerUbicacion() {
+function getLatLngAndUpdateDB() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (posicion) {
       const latitud = posicion.coords.latitude;
       const longitud = posicion.coords.longitude;
-      const ubicacion = {
-        lat: latitud,
-        lng: longitud,
-      };
 
-      actualizarUbicacion(ubicacion);
-      actualizarMapa(ubicacion);
+      if (coordenadas.lat != latitud || coordenadas.lng != longitud) {
+        coordenadas = {
+          lat: latitud,
+          lng: longitud,
+        };
+        actualizarUbicacion(coordenadas); // Actualiza en DB la ubicacion del bus
+      }
+    });
+  } else {
+    console.log("Geolocalización no es soportada por este navegador.");
+  }
+}
+
+function getLatLngAndUpdateMap() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (posicion) {
+      const latitud = posicion.coords.latitude;
+      const longitud = posicion.coords.longitude;
+
+      if (coordenadas.lat != latitud || coordenadas.lng != longitud) {
+        coordenadas = {
+          lat: latitud,
+          lng: longitud,
+        };
+        actualizarMapa(coordenadas);
+      }
     });
   } else {
     console.log("Geolocalización no es soportada por este navegador.");
@@ -113,7 +141,6 @@ function actualizarMapa(ubicacion) {
       },
     });
   } else {
-    console.log(mapa.marker);
     // Mover el marcador a la nueva ubicación si ya existe
     if (mapa && ubicacion) {
       console.log("actualizando la ubicacion del marcador");
