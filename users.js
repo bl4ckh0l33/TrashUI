@@ -2,6 +2,7 @@ const BASE_API_URL = "https://trash-api-tau.vercel.app/api/posts";
 const busesSelect = document.getElementById("buses");
 const driverNameLabel = document.querySelector("#driverName");
 const userImage = document.querySelector("#userImage");
+const selectUmbral = document.querySelector("#umbral");
 
 var svgDot = "./dot.svg";
 var svgBus = "./bus.svg";
@@ -21,6 +22,9 @@ busesSelect.addEventListener("change", () => {
 
 // Establecer un umbral de proximidad en metros
 var umbralProximidad = 50; // Por ejemplo, 50 metros
+selectUmbral.addEventListener("change", () => {
+  umbralProximidad = Number(selectUmbral.value);
+});
 
 // Audio
 const audio = document.getElementById("alerta");
