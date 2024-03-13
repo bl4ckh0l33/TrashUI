@@ -32,7 +32,7 @@ busesSelect.addEventListener("change", () => {
 });
 
 initLocationBtn.addEventListener("click", () => {
-  intervalo1 = setInterval(getLatLngAndUpdateDB, 2000);
+  intervalo1 = setInterval(getLatLngAndUpdateDB, 1000);
   intervalo2 = setInterval(getLatLngAndUpdateMap, 500);
 });
 
