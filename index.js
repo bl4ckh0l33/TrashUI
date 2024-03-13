@@ -11,7 +11,11 @@ var buses;
 var intervalo1;
 var intervalo2;
 
-var coordenadas = {
+var coordenadas1 = {
+  lat: 0,
+  lng: 0,
+};
+var coordenadas2 = {
   lat: 0,
   lng: 0,
 };
@@ -74,12 +78,12 @@ function getLatLngAndUpdateDB() {
       const latitud = posicion.coords.latitude;
       const longitud = posicion.coords.longitude;
 
-      if (coordenadas.lat != latitud || coordenadas.lng != longitud) {
-        coordenadas = {
+      if (coordenadas1.lat != latitud || coordenadas1.lng != longitud) {
+        coordenadas1 = {
           lat: latitud,
           lng: longitud,
         };
-        actualizarUbicacion(coordenadas); // Actualiza en DB la ubicacion del bus
+        actualizarUbicacion(coordenadas1); // Actualiza en DB la ubicacion del bus
       }
     });
   } else {
@@ -93,12 +97,12 @@ function getLatLngAndUpdateMap() {
       const latitud = posicion.coords.latitude;
       const longitud = posicion.coords.longitude;
 
-      if (coordenadas.lat != latitud || coordenadas.lng != longitud) {
-        coordenadas = {
+      if (coordenadas2.lat != latitud || coordenadas2.lng != longitud) {
+        coordenadas2 = {
           lat: latitud,
           lng: longitud,
         };
-        actualizarMapa(coordenadas);
+        actualizarMapa(coordenadas2);
       }
     });
   } else {
